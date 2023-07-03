@@ -1,32 +1,27 @@
-import express  from "express";
-
-import { gestAllGestor,
-    getOneGestor,
-    createOneGestor,
-    updateGestor,
-    deleteOneGestor } 
-    from "../controllers/gestor.controller.js";
-
+import express from "express";
+import {
+  getAllGestor,
+  getOneGestor,
+  createGestor,
+  updateGestor,
+  deleteOneGestor,
+} from "../controllers/gestor.controller.js";
+import { verifyToken } from "../controllers/user.controller.js";
 
 const router = express.Router();
 
+// Select all gestores
+router.get("/", verifyToken,  getAllGestor);
 
-// Select all gestors
-    router.get("/", gestAllGestor);
-    
-//Select one gestor
-    router.get("/:id", getOneGestor);
-         
+// Select one  gestor
+router.get("/:id", verifyToken, getOneGestor);
+
 //Create a gestor
-    router.post("/",createOneGestor );
-    
-//update a gestor
-    router.put("/:id", updateGestor);
-        
-    router.delete("/:id", deleteOneGestor);
+router.post("/", verifyToken, createGestor);
 
+//update a gestor
+router.put("/:id", verifyToken, updateGestor);
+
+router.delete("/:id", verifyToken, deleteOneGestor);
 
 export default router;
-
-
-
